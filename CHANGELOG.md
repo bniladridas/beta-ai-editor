@@ -18,3 +18,7 @@
 - Updated README to include relevant images and badges.
 - Updated LICENSE file to reflect the project name and year.
 - Created CHANGELOG.md to document project updates.
+
+## [1.1.0] - 2025-03-01
+### Added
+- Dependabot configuration to manage dependencies and check for updates in `package.json` and `package-lock.json` files.
