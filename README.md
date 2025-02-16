@@ -49,5 +49,13 @@ Users of Beta AI Editor might unknowingly expose their AI-generated code and API
 - Introduce authentication for API endpoints.
 - Enable rate limiting to prevent abuse.
 
+## Dependabot Configuration
+We have integrated Dependabot to help manage our dependencies and keep them up-to-date. Dependabot automatically checks for updates to the dependencies defined in our `package.json` and `package-lock.json` files.
+
+### Benefits of Using Dependabot
+- **Automated Dependency Updates**: Dependabot regularly checks for updates to your dependencies and creates pull requests to keep them up-to-date.
+- **Security Alerts**: Dependabot alerts you to security vulnerabilities in your dependencies and provides fixes.
+- **Improved Code Quality**: By keeping dependencies up-to-date, you ensure that your project benefits from the latest features, bug fixes, and performance improvements.
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
