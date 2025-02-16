@@ -4,39 +4,50 @@
 
 ![AI Beta Image](images/ai-beta-image-file.png)
 
-## Overview
-Beta AI Editor is an AI-powered code generation and editing platform that enhances your coding experience with intelligent suggestions and real-time assistance.
+## Summary
+Beta AI Editor allows AI-powered code generation and editing but has potential security concerns related to API key exposure and unauthorized data access.
 
-## Technologies Used
-- **Frontend Framework**: React with TypeScript
-- **Build Tool**: Vite
-- **AI Integration**: Google Generative AI
-- **Styling**: Tailwind CSS
+## Details
+Beta AI Editor integrates Google Generative AI, providing intelligent code suggestions. However, improper API key handling and insufficient request validation may lead to data exposure. The application does not enforce strict origin policies, potentially allowing unauthorized requests to access AI-generated content.
 
-## Key Features
-1. **AI Code Generation**: Generate code snippets using Google Generative AI.
-2. **User Interface**: Responsive design with theme options.
-3. **Help and Information**: Integrated user guide and support contact.
+Example risk points:
+- API keys stored in client-side code without encryption.
+- No rate limiting on AI requests, allowing potential abuse.
+- Lack of strict CORS settings, exposing the API to cross-origin requests.
+- AI-generated responses may include sensitive or unintended data.
 
-## What's New
-- Introducing AI assistance powered by Google Generative AI! This feature enhances your coding experience by providing intelligent suggestions and code generation capabilities.
-- Now you can generate code snippets, receive real-time assistance, and improve your productivity with our integrated AI tools.
+## Attack Scenario
+1. An attacker hosts a malicious web page (`http://malicious.example.com`).
+2. A user visits the malicious site while logged into Beta AI Editor.
+3. The malicious site executes `fetch('http://127.0.0.1:3000/api/generate')`, bypassing insufficient CORS restrictions.
+4. The attacker gains access to AI-generated code responses.
+5. If API keys are exposed in the client, the attacker can make direct API requests.
 
-## Project Structure
-- **Main Files**:
-  - `/src/App.tsx`: Main application component
-  - `/index.html`: HTML template
-  - `/docs/user_guide.md`: User instructions
-  - `/docs/terms_of_service.md`: Terms of service document
+Additionally, attackers can:
+- Fetch `/history`: if recent AI generations are stored without authentication.
+- Access `/docs`: if documentation files reveal API structures.
+- Exploit `/assets`: if the directory listing is enabled.
 
-## Getting Started
-To run the project locally:
+## PoC (Proof of Concept)
 1. Clone the repository.
-2. Install dependencies using `npm install`.
-3. Start the development server with `npm run dev`.
+2. Run `npm install` and start with `npm run dev`.
+3. Open browser console on another website and run:
+   ```js
+   fetch('http://127.0.0.1:3000/api/generate').then(r => r.text()).then(console.log);
+   ```
+4. If CORS is not restricted, the response will contain AI-generated content.
 
-## Contact Information
-For any questions or concerns, please contact support at bniladridas@gmail.com.
+## Impact
+Users of Beta AI Editor might unknowingly expose their AI-generated code and API keys due to improper security measures. Attackers can:
+- Extract sensitive business logic or intellectual property.
+- Abuse AI request endpoints for free API usage.
+- Leak AI-generated data to unauthorized third parties.
+
+## Mitigation Suggestions
+- Implement strict CORS policies.
+- Store API keys securely using environment variables.
+- Introduce authentication for API endpoints.
+- Enable rate limiting to prevent abuse.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
