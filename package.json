@@ -8,14 +8,15 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "vite"
+    "start": "vite",
+    "install": "npm install --legacy-peer-deps"
   },
   "dependencies": {
     "@google/generative-ai": "^0.2.1",
     "@uiw/react-textarea-code-editor": "^3.0.2",
     "lucide-react": "^0.344.0",
     "openai": "^4.85.1",
-    "react": "^19.0.0",
+    "react": "^18.3.1",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
