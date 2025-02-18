@@ -29,8 +29,83 @@
     <meta property="og:url" content="https://betaai-editor.vercel.app" />
     <meta property="og:type" content="website" />
     <title>Beta AI Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+    </style>
   </head>
-  <body>
+  <body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto p-4">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="flex items-center mb-4">
+          <img alt="Beta AI Editor logo" class="w-12 h-12 rounded-full mr-4" height="50" src="https://raw.githubusercontent.com/bniladridas/beta-ai-editor/master/favicons/ms-icon-310x310.png" width="50"/>
+          <div>
+            <h1 class="text-xl font-bold">Beta AI Editor</h1>
+            <p class="text-gray-500">GitHub App</p>
+          </div>
+        </div>
+        <p class="text-gray-700 mb-4">
+          A software solution that simplifies coding by providing intelligent assistance, automation, and detailed explanations.
+        </p>
+        <h2 class="text-lg font-semibold mb-2">Example Code for Webhook Handling (Node.js)</h2>
+        <p class="text-gray-700 mb-4">
+          If you're using Node.js, here's a basic example for handling webhooks:
+        </p>
+        <pre class="bg-gray-100 p-4 rounded-lg overflow-auto text-sm text-gray-800">
+          <code>
+            const express = require('express');
+            const crypto = require('crypto');
+            const app = express();
+
+            const WEBHOOK_SECRET = process.env.GITHUB_WEBHOOK_SECRET;
+
+            app.post('/api/github/webhook', (req, res) => {
+              const signature = req.headers['x-hub-signature-256'];
+              const payload = JSON.stringify(req.body);
+              const digest = 'sha256=' + crypto.createHmac('sha256', WEBHOOK_SECRET).update(payload).digest('hex');
+
+              if (signature !== digest) {
+                return res.status(401).send('Unauthorized');
+              }
+
+              // Handle the event
+              const event = req.headers['x-github-event'];
+              switch (event) {
+                case 'ping':
+                  console.log('GitHub Webhook Ping Received');
+                  break;
+                case 'push':
+                  console.log('Push Event Received:', req.body);
+                  break;
+                default:
+                  console.log('Unhandled Event:', event);
+              }
+
+              res.status(200).send('OK');
+            });
+
+            const PORT = process.env.PORT || 3000;
+            app.listen(PORT, () => {
+              console.log(`Server running on port ${PORT}`);
+            });
+          </code>
+        </pre>
+        <h3 class="text-lg font-semibold mt-6 mb-2">Note to Users:</h3>
+        <p class="text-gray-700">
+          Beta AI Editor requires access to your repositories to enable features like pull request analysis and code suggestions. We provide these features while ensuring your data remains secure and private. For more details, view our
+          <a class="text-blue-500" href="https://github.com/bniladridas/beta-ai-editor/blob/master/docs/data_privacy_policy.md">data privacy policy</a>. Please also refer to our
+          <a class="text-blue-500" href="https://github.com/bniladridas/beta-ai-editor/blob/master/docs/user_guide.md">User Guide</a> | <a class="text-blue-500" href="https://github.com/bniladridas/beta-ai-editor/blob/master/docs/terms_of_service.md">Terms of Service</a>.
+        </p>
+      </div>
+      <div class="mt-6">
+        <p>Repository: <a class="text-blue-500" href="https://github.com/bniladridas/beta-ai-editor">https://github.com/bniladridas/beta-ai-editor</a></p>
+        <p>Visit my <a class="text-blue-500" href="https://github.com/bniladridas">GitHub</a> | Check out the <a class="text-blue-500" href="https://github.com/apps/beta-ai-editor">GitHub App</a> | Explore the <a class="text-blue-500" href="https://betaai-editor.vercel.app/">Live Web App</a></p>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
