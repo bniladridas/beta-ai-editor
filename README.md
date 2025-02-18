@@ -49,6 +49,15 @@ Users of Beta AI Editor might unknowingly expose their AI-generated code and API
 - Introduce authentication for API endpoints.
 - Enable rate limiting to prevent abuse.
 
+## Data Privacy Policy
+We take your data privacy seriously. Here is a summary of our data privacy policy:
+- **Data Collection**: We collect personal information such as your name, email address, and usage data.
+- **Data Usage**: Your data is used to provide and improve our services, communicate with you, and ensure security.
+- **Data Storage**: We store your data securely and retain it only as long as necessary.
+- **User Rights**: You have the right to access, correct, delete, and object to the processing of your data.
+
+For more details, please refer to our [Data Privacy Policy](docs/data_privacy_policy.md).
+
 ## Dependabot Configuration
 We have integrated Dependabot to help manage our dependencies and keep them up-to-date. Dependabot automatically checks for updates to the dependencies defined in our `package.json` and `package-lock.json` files.
 

@@ -12,6 +12,15 @@ This guide provides an overview of how to use the Beta AI Editor effectively, em
 2. **Curation**: Use the selection menus to choose elements from the AI suggestions.
 3. **Save Your Work**: Make sure to save your changes regularly.
 
+## Data Privacy
+We take your data privacy seriously. Here is how we handle your data:
+- **Data Collection**: We collect personal information such as your name, email address, and usage data.
+- **Data Usage**: Your data is used to provide and improve our services, communicate with you, and ensure security.
+- **Data Storage**: We store your data securely and retain it only as long as necessary.
+- **User Rights**: You have the right to access, correct, delete, and object to the processing of your data.
+
+For more details, please refer to our [Data Privacy Policy](data_privacy_policy.md).
+
 ## Copyright Information
 - AI-generated content can be copyrighted if significant human input is added.
 - Ensure that your contributions are meaningful to maintain copyright eligibility.
