@@ -68,3 +68,10 @@ We have integrated Dependabot to help manage our dependencies and keep them up-t
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## How to Check the Website
+After deploying the website, you can check it by following these steps:
+1. Open your web browser.
+2. Navigate to the URL where the website is hosted. For example: `https://betaai-editor.vercel.app`
+3. The website should load and display the content from the `index.html` file.
+4. Verify that all the features and functionalities are working as expected.
