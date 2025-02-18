@@ -30,6 +30,11 @@ jobs:
     - name: Build the project
       run: npm run build
 
+    - name: Deploy to Vercel
+      run: npm run deploy
+      env:
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
   dependabot:
     runs-on: ubuntu-latest
 
