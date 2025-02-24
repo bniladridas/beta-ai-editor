@@ -60,7 +60,7 @@ function App() {
     URL.revokeObjectURL(url);
   }, [code, selectedLanguage]);
 
-  const generateCode = useCallback(async () => {
+  const handleGenerateCode = useCallback(async () => {
     if (!prompt.trim()) {
       setError('Please enter a prompt first');
       return;
@@ -184,11 +184,11 @@ function App() {
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Describe the code you want to generate..."
               className="flex-1 px-3 py-2 sm:px-4 sm:py-2 rounded-lg bg-black/20 placeholder-white/50 border-none focus:ring-2 ring-orange-500 outline-none text-sm sm:text-base"
-              onKeyDown={(e) => e.key === 'Enter' && generateCode()}
+              onKeyDown={(e) => e.key === 'Enter' && handleGenerateCode()}
               aria-label="Code Generation Prompt"
             />
             <button
-              onClick={generateCode}
+              onClick={handleGenerateCode}
               disabled={isGenerating}
               className={`flex items-center gap-1 sm:gap-2 px-4 py-2 sm:px-6 sm:py-2 rounded-lg bg-orange-600/80 hover:bg-orange-600
                 transition-all whitespace-nowrap text-sm sm:text-base
