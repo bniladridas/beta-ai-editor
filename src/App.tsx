@@ -75,7 +75,7 @@ function App() {
 
       const result = await model.generateContent(promptText);
       const response = await result.response;
-      const generatedCode = response.text();
+      const generatedCode = await response.text();
 
       setCode(generatedCode);
     } catch (err) {
