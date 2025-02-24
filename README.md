@@ -5,7 +5,7 @@
 ![AI Beta Image](images/ai-beta-image-file.png)
 
 ## Summary
-Beta AI Editor allows AI-powered code generation and editing but has potential security concerns related to API key exposure and unauthorized data access.
+Beta AI Editor allows AI-powered code generation and editing but has potential security concerns related to API key exposure and unauthorized data access. The latest update introduces AI assistance powered by Google Generative AI, enhancing the coding experience with intelligent suggestions and code generation capabilities.
 
 ## Details
 Beta AI Editor integrates Google Generative AI, providing intelligent code suggestions. However, improper API key handling and insufficient request validation may lead to data exposure. The application does not enforce strict origin policies, potentially allowing unauthorized requests to access AI-generated content.
@@ -65,6 +65,19 @@ We have integrated Dependabot to help manage our dependencies and keep them up-t
 - **Automated Dependency Updates**: Dependabot regularly checks for updates to your dependencies and creates pull requests to keep them up-to-date.
 - **Security Alerts**: Dependabot alerts you to security vulnerabilities in your dependencies and provides fixes.
 - **Improved Code Quality**: By keeping dependencies up-to-date, you ensure that your project benefits from the latest features, bug fixes, and performance improvements.
+
+## AI Assistance Feature
+### How to Use the AI Assistance Feature
+1. **Select Language**: Choose your preferred programming language from the dropdown menu.
+2. **Enter Prompt**: Describe the code you want to generate in the input field.
+3. **Generate Code**: Click the "Generate" button or press Enter to create the code.
+4. **Edit Code**: Modify the generated code in the editor as needed.
+5. **Save, Clear, Download**: Use the buttons to save, clear, or download your code.
+
+### Benefits of AI Assistance
+- **Intelligent Suggestions**: Receive real-time code suggestions to enhance productivity.
+- **Code Generation**: Generate code snippets based on your descriptions.
+- **Improved Workflow**: Streamline your coding process with AI-powered tools.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
