@@ -22,3 +22,11 @@
 ## [1.1.0] - 2025-03-01
 ### Added
 - Dependabot configuration to manage dependencies and check for updates in `package.json` and `package-lock.json` files.
+
+## [1.2.0] - 2025-04-01
+### Added
+- New AI assistance feature powered by Google Generative AI.
+
+## [1.3.0] - 2025-05-01
+### Added
+- Updated the model to gemini-2.0-flash-thinking-exp-01-21.

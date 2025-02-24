@@ -70,7 +70,7 @@ function App() {
     setError('');
 
     try {
-      const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-thinking-exp-01-21' });
       const promptText = `Generate ${selectedLanguage} code for: ${prompt}. Only provide the code, no explanations.`;
 
       const result = await model.generateContent(promptText);

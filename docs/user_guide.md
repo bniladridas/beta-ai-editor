@@ -12,6 +12,19 @@ This guide provides an overview of how to use the Beta AI Editor effectively, em
 2. **Curation**: Use the selection menus to choose elements from the AI suggestions.
 3. **Save Your Work**: Make sure to save your changes regularly.
 
+## AI Assistance Feature
+### How to Use the AI Assistance Feature
+1. **Select Language**: Choose your preferred programming language from the dropdown menu.
+2. **Enter Prompt**: Describe the code you want to generate in the input field.
+3. **Generate Code**: Click the "Generate" button or press Enter to create the code.
+4. **Edit Code**: Modify the generated code in the editor as needed.
+5. **Save, Clear, Download**: Use the buttons to save, clear, or download your code.
+
+### Benefits of AI Assistance
+- **Intelligent Suggestions**: Receive real-time code suggestions to enhance productivity.
+- **Code Generation**: Generate code snippets based on your descriptions.
+- **Improved Workflow**: Streamline your coding process with AI-powered tools.
+
 ## Data Privacy
 We take your data privacy seriously. Here is how we handle your data:
 - **Data Collection**: We collect personal information such as your name, email address, and usage data.
