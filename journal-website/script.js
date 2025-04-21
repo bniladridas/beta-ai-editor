@@ -1,197 +1,267 @@
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
     // Highlight the code blocks
     hljs.highlightAll();
-    
+
     // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+    $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
+
+        const targetId = $(this).attr('href');
+        if (targetId === '#') return;
+
+        const $targetElement = $(targetId);
+        if ($targetElement.length) {
+            $('html, body').animate({
+                scrollTop: $targetElement.offset().top - 80
+            }, 800);
+        }
     });
-    
+
     // Newsletter form submission (prevent default for demo)
-    const newsletterForm = document.querySelector('.newsletter form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input[type="email"]');
-            if (emailInput.value.trim() !== '') {
-                // Show success message
-                const successMessage = document.createElement('p');
-                successMessage.textContent = 'Thank you for subscribing!';
-                successMessage.style.color = '#2ecc71';
-                
-                // Remove any existing success message
-                const existingMessage = this.querySelector('p:not(:first-child)');
-                if (existingMessage) {
-                    existingMessage.remove();
-                }
-                
-                this.appendChild(successMessage);
-                emailInput.value = '';
-            }
-        });
-    }
-    
+    $('.newsletter form').on('submit', function(e) {
+        e.preventDefault();
+        const $emailInput = $(this).find('input[type="email"]');
+        if ($emailInput.val().trim() !== '') {
+            // Show success message with Bootstrap alert
+            const $successMessage = $('<div class="alert alert-success mt-3" role="alert">' +
+                                    '<i class="fas fa-check-circle me-2"></i>Thank you for subscribing!' +
+                                    '</div>');
+
+            // Remove any existing success message
+            $(this).find('.alert').remove();
+
+            // Add the new message with fade effect
+            $successMessage.hide().appendTo(this).fadeIn(300);
+            $emailInput.val('');
+
+            // Auto-dismiss after 5 seconds
+            setTimeout(function() {
+                $successMessage.fadeOut(300, function() {
+                    $(this).remove();
+                });
+            }, 5000);
+        }
+    });
+
     // Add reading time estimate
-    const article = document.querySelector('.post-content');
-    if (article) {
-        const text = article.textContent;
+    const $article = $('.post-content');
+    if ($article.length) {
+        const text = $article.text();
         const wordCount = text.split(/\s+/).length;
         const readingTime = Math.ceil(wordCount / 200); // Assuming 200 words per minute
-        
-        const metaSection = document.querySelector('.meta');
-        if (metaSection) {
-            const readingTimeSpan = document.createElement('span');
-            readingTimeSpan.innerHTML = `<i class="far fa-clock"></i> ${readingTime} min read`;
-            metaSection.appendChild(readingTimeSpan);
+
+        const $metaSection = $('.meta');
+        if ($metaSection.length) {
+            $('<span><i class="far fa-clock"></i> ' + readingTime + ' min read</span>')
+                .appendTo($metaSection);
         }
     }
-    
-    // Add table of contents
-    const headings = article ? article.querySelectorAll('h2') : [];
-    if (headings.length > 0 && article) {
-        const toc = document.createElement('div');
-        toc.className = 'table-of-contents';
-        toc.innerHTML = '<h3>Table of Contents</h3><ul></ul>';
-        
-        const tocList = toc.querySelector('ul');
-        
-        headings.forEach((heading, index) => {
+
+    // Add table of contents with Bootstrap styling
+    const $headings = $article.find('h2');
+    if ($headings.length > 0) {
+        const $toc = $('<div class="table-of-contents card mb-4">' +
+                      '<div class="card-body">' +
+                      '<h3 class="card-title">Table of Contents</h3>' +
+                      '<ul class="list-unstyled toc-list"></ul>' +
+                      '</div></div>');
+
+        const $tocList = $toc.find('.toc-list');
+
+        $headings.each(function(index) {
             // Add ID to heading if it doesn't have one
-            if (!heading.id) {
-                heading.id = `section-${index}`;
+            if (!$(this).attr('id')) {
+                $(this).attr('id', 'section-' + index);
             }
-            
-            const listItem = document.createElement('li');
-            const link = document.createElement('a');
-            link.href = `#${heading.id}`;
-            link.textContent = heading.textContent;
-            
-            listItem.appendChild(link);
-            tocList.appendChild(listItem);
+
+            const headingId = $(this).attr('id');
+            const headingText = $(this).text();
+
+            $('<li class="toc-item">' +
+              '<a href="#' + headingId + '" class="toc-link">' +
+              '<i class="fas fa-angle-right me-2"></i>' + headingText +
+              '</a></li>').appendTo($tocList);
         });
-        
+
         // Insert TOC after intro section
-        const introSection = article.querySelector('.intro');
-        if (introSection) {
-            introSection.after(toc);
+        const $introSection = $article.find('.intro');
+        if ($introSection.length) {
+            $toc.insertAfter($introSection);
         } else {
-            article.prepend(toc);
+            $toc.prependTo($article);
         }
-        
-        // Add TOC styles
-        const style = document.createElement('style');
-        style.textContent = `
-            .table-of-contents {
-                background-color: #f8f9fa;
-                border-radius: 8px;
-                padding: 1.5rem;
-                margin-bottom: 2rem;
-            }
-            
-            .table-of-contents h3 {
-                margin-top: 0;
-                margin-bottom: 1rem;
-            }
-            
-            .table-of-contents ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .table-of-contents li {
-                margin-bottom: 0.5rem;
-                padding-left: 1rem;
-                position: relative;
-            }
-            
-            .table-of-contents li:before {
-                content: "•";
-                position: absolute;
-                left: 0;
-                color: var(--primary-color);
-            }
-            
-            .table-of-contents a {
-                color: var(--dark-color);
-            }
-            
-            .table-of-contents a:hover {
-                color: var(--primary-color);
-            }
-        `;
-        document.head.appendChild(style);
+
+        // Add active class to current section in TOC
+        $(window).on('scroll', function() {
+            const scrollPosition = $(window).scrollTop();
+
+            $headings.each(function() {
+                const sectionTop = $(this).offset().top - 100;
+                const sectionBottom = sectionTop + $(this).outerHeight();
+                const sectionId = $(this).attr('id');
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    $('.toc-link').removeClass('active');
+                    $('.toc-link[href="#' + sectionId + '"]').addClass('active');
+                }
+            });
+        });
     }
-    
-    // Add back to top button
-    const backToTopButton = document.createElement('button');
-    backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    backToTopButton.className = 'back-to-top';
-    document.body.appendChild(backToTopButton);
-    
-    // Add back to top button styles
-    const backToTopStyle = document.createElement('style');
-    backToTopStyle.textContent = `
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-            z-index: 99;
-        }
-        
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .back-to-top:hover {
-            background-color: #3a5999;
-        }
-    `;
-    document.head.appendChild(backToTopStyle);
-    
+
+    // Add back to top button with Bootstrap tooltip
+    const $backToTopButton = $('<button class="back-to-top" data-bs-toggle="tooltip" data-bs-placement="left" title="Back to top">' +
+                             '<i class="fas fa-arrow-up"></i>' +
+                             '</button>');
+    $backToTopButton.appendTo('body');
+
+    // Initialize tooltip
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
     // Show/hide back to top button based on scroll position
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTopButton.classList.add('visible');
+    $(window).on('scroll', function() {
+        if ($(this).scrollTop() > 300) {
+            $backToTopButton.addClass('visible');
         } else {
-            backToTopButton.classList.remove('visible');
+            $backToTopButton.removeClass('visible');
         }
     });
-    
+
     // Scroll to top when button is clicked
-    backToTopButton.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    $backToTopButton.on('click', function() {
+        $('html, body').animate({
+            scrollTop: 0
+        }, 800);
+        return false;
+    });
+
+    // Add copy code button to code blocks
+    $('pre code').each(function() {
+        const $this = $(this);
+        const $pre = $this.parent();
+
+        // Create copy button
+        const $copyButton = $('<button class="copy-code-button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to clipboard">' +
+                            '<i class="far fa-copy"></i>' +
+                            '</button>');
+
+        // Add button to pre element
+        $pre.css('position', 'relative').append($copyButton);
+
+        // Initialize tooltip
+        new bootstrap.Tooltip($copyButton[0]);
+
+        // Copy functionality
+        $copyButton.on('click', function() {
+            const code = $this.text();
+            navigator.clipboard.writeText(code).then(function() {
+                // Change icon and tooltip temporarily
+                const oldTitle = $copyButton.attr('data-bs-original-title');
+                $copyButton.attr('data-bs-original-title', 'Copied!');
+                $copyButton.tooltip('show');
+                $copyButton.find('i').removeClass('fa-copy').addClass('fa-check');
+
+                // Reset after 2 seconds
+                setTimeout(function() {
+                    $copyButton.attr('data-bs-original-title', oldTitle);
+                    $copyButton.find('i').removeClass('fa-check').addClass('fa-copy');
+                }, 2000);
+            });
         });
     });
+
+    // Add CSS for new elements
+    $('<style>\n' +
+      '.table-of-contents {\n' +
+      '    background-color: rgba(0, 0, 0, 0.02);\n' +
+      '    border: none;\n' +
+      '    border-radius: 12px;\n' +
+      '    margin-bottom: var(--space-xl);\n' +
+      '}\n' +
+      '\n' +
+      '.table-of-contents .card-title {\n' +
+      '    font-size: 1.2rem;\n' +
+      '    margin-bottom: 1rem;\n' +
+      '    color: var(--dark-color);\n' +
+      '}\n' +
+      '\n' +
+      '.toc-item {\n' +
+      '    margin-bottom: 0.5rem;\n' +
+      '}\n' +
+      '\n' +
+      '.toc-link {\n' +
+      '    color: var(--secondary-color);\n' +
+      '    display: inline-flex;\n' +
+      '    align-items: center;\n' +
+      '    transition: all var(--transition-normal);\n' +
+      '    border-bottom: none;\n' +
+      '}\n' +
+      '\n' +
+      '.toc-link i {\n' +
+      '    opacity: 0.5;\n' +
+      '    transition: all var(--transition-normal);\n' +
+      '}\n' +
+      '\n' +
+      '.toc-link:hover, .toc-link.active {\n' +
+      '    color: var(--primary-color);\n' +
+      '    transform: translateX(3px);\n' +
+      '}\n' +
+      '\n' +
+      '.toc-link:hover i, .toc-link.active i {\n' +
+      '    opacity: 1;\n' +
+      '}\n' +
+      '\n' +
+      '.back-to-top {\n' +
+      '    position: fixed;\n' +
+      '    bottom: 20px;\n' +
+      '    right: 20px;\n' +
+      '    width: 50px;\n' +
+      '    height: 50px;\n' +
+      '    border-radius: 50%;\n' +
+      '    background-color: var(--primary-color);\n' +
+      '    color: white;\n' +
+      '    border: none;\n' +
+      '    cursor: pointer;\n' +
+      '    display: flex;\n' +
+      '    align-items: center;\n' +
+      '    justify-content: center;\n' +
+      '    font-size: 1.2rem;\n' +
+      '    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);\n' +
+      '    opacity: 0;\n' +
+      '    visibility: hidden;\n' +
+      '    transition: all var(--transition-normal);\n' +
+      '    z-index: 99;\n' +
+      '}\n' +
+      '\n' +
+      '.back-to-top.visible {\n' +
+      '    opacity: 1;\n' +
+      '    visibility: visible;\n' +
+      '}\n' +
+      '\n' +
+      '.back-to-top:hover {\n' +
+      '    background-color: var(--dark-color);\n' +
+      '    transform: translateY(-3px);\n' +
+      '}\n' +
+      '\n' +
+      '.copy-code-button {\n' +
+      '    position: absolute;\n' +
+      '    top: 0.5rem;\n' +
+      '    right: 0.5rem;\n' +
+      '    background-color: rgba(255, 255, 255, 0.1);\n' +
+      '    color: rgba(255, 255, 255, 0.7);\n' +
+      '    border: none;\n' +
+      '    border-radius: 4px;\n' +
+      '    padding: 0.25rem 0.5rem;\n' +
+      '    font-size: 0.8rem;\n' +
+      '    cursor: pointer;\n' +
+      '    transition: all var(--transition-fast);\n' +
+      '}\n' +
+      '\n' +
+      '.copy-code-button:hover {\n' +
+      '    background-color: rgba(255, 255, 255, 0.2);\n' +
+      '    color: rgba(255, 255, 255, 0.9);\n' +
+      '}\n' +
+      '</style>').appendTo('head');
 });
