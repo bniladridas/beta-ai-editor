@@ -67,6 +67,13 @@ We have integrated Dependabot to help manage our dependencies and keep them up-t
 - **Improved Code Quality**: By keeping dependencies up-to-date, you ensure that your project benefits from the latest features, bug fixes, and performance improvements.
 
 ## AI Assistance Feature
+### Setup
+1. Create a `.env` file in the root directory with your Gemini API key:
+   ```
+   VITE_GEMINI_API_KEY=your_gemini_api_key_here
+   ```
+2. Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+
 ### How to Use the AI Assistance Feature
 1. **Select Language**: Choose your preferred programming language from the dropdown menu.
 2. **Enter Prompt**: Describe the code you want to generate in the input field.
@@ -78,6 +85,14 @@ We have integrated Dependabot to help manage our dependencies and keep them up-t
 - **Intelligent Suggestions**: Receive real-time code suggestions to enhance productivity.
 - **Code Generation**: Generate code snippets based on your descriptions.
 - **Improved Workflow**: Streamline your coding process with AI-powered tools.
+
+### Troubleshooting
+If you encounter the error "Failed to generate code", please check:
+
+1. Your Gemini API key is correctly set in the `.env` file
+2. You have an active internet connection
+3. The Gemini API service is available
+4. You're using a supported model (the app now uses 'gemini-1.5-pro')
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

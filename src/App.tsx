@@ -5,7 +5,9 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 type Language = 'c' | 'c++' | 'c#' | 'go' | 'java8' | 'javascript' | 'kotlin' | 'php' | 'python3' | 'scala' | 'swift';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+// Check if API key is available
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+const genAI = new GoogleGenerativeAI(apiKey);
 
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark' | 'tiger'>(() =>
@@ -66,11 +68,19 @@ function App() {
       return;
     }
 
+    // Check if API key is available
+    if (!apiKey) {
+      setError('API key is missing. Please add your Gemini API key to the .env file.');
+      return;
+    }
+
     setIsGenerating(true);
     setError('');
 
     try {
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-thinking-exp-01-21' });
+      // Use a more widely available model
+      // The model name should be one of the supported models like 'gemini-1.5-pro'
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
       const promptText = `Generate ${selectedLanguage} code for: ${prompt}. Only provide the code, no explanations.`;
 
       const result = await model.generateContent(promptText);
@@ -79,8 +89,12 @@ function App() {
 
       setCode(generatedCode);
     } catch (err) {
-      setError('Failed to generate code. Please try again.');
       console.error('Error generating code:', err);
+      if (err instanceof Error) {
+        setError(`Failed to generate code: ${err.message}`);
+      } else {
+        setError('Failed to generate code. Please check your API key and try again.');
+      }
     } finally {
       setIsGenerating(false);
     }
