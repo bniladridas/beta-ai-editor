@@ -1,113 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Niladri Das" />
-    <link rel="author" href="https://www.linkedin.com/in/bniladridas" />
-    <link rel="author" href="https://github.com/bniladridas" />
-    <meta property="og:title" content="Beta AI Editor" />
-    <meta property="og:description" content="Enhance your coding experience with AI assistance powered by Google Generative AI. Generate code snippets and receive real-time assistance to improve productivity." />
-    <meta property="og:image" content="https://betaai-editor.vercel.app/images/ai-beta-image-file.png" />
-    <meta property="og:url" content="https://betaai-editor.vercel.app" />
-    <meta property="og:type" content="website" />
-    <meta name="description" content="Beta AI Editor now includes AI assistance powered by Google Generative AI. Enhance your coding experience with intelligent code suggestions and code generation capabilities." />
-    <title>Beta AI Editor</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, shrink-to-fit=no, user-scalable=yes">
+    <meta name="description" content="Algorithm Transparency Documentation for Beta AI Editor - Understanding how our AI code generation works">
+    <meta name="theme-color" content="#2c3e50">
+    <title>Algorithm Transparency | Beta AI Editor</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-      body {
-        font-family: 'Roboto', sans-serif;
-      }
+        :root {
+            /* Core colors */
+            --primary-color: #2c3e50;
+            --secondary-color: #7f8c8d;
+            --dark-color: #1a202c;
+            --light-color: #f7f9fc;
+            --text-color: #2d3748;
+            --border-color: #edf2f7;
+            
+            /* Accent colors */
+            --accent-blue: #3498db;
+            --accent-green: #2ecc71;
+            --accent-yellow: #f1c40f;
+            --accent-red: #e74c3c;
+            
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            --font-serif: 'Merriweather', Georgia, serif;
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-xxl: 3rem;
+        }
+        
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.75;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.011em;
+            max-width: 100vw;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: var(--space-md);
+            line-height: 1.3;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-xl);
+            position: relative;
+            padding-bottom: var(--space-md);
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background-color: var(--accent-blue);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.75rem;
+            margin-top: var(--space-xxl);
+            margin-bottom: var(--space-lg);
+            color: var(--primary-color);
+        }
+        
+        h3 {
+            font-size: 1.35rem;
+            margin-top: var(--space-xl);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: var(--space-lg);
+            max-width: 70ch;
+        }
+        
+        .container {
+            max-width: 1000px;
+            padding: var(--space-xl) var(--space-md);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--space-xl) 0;
+            margin-bottom: var(--space-xxl);
+        }
+        
+        header h1 {
+            color: white;
+            margin-bottom: var(--space-md);
+        }
+        
+        header h1::after {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            max-width: 800px;
+        }
+        
+        .section {
+            margin-bottom: var(--space-xxl);
+            padding-bottom: var(--space-xl);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .algorithm-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: var(--space-xl);
+            margin-bottom: var(--space-xl);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .algorithm-card h3 {
+            display: flex;
+            align-items: center;
+            margin-top: 0;
+        }
+        
+        .algorithm-card h3 i {
+            margin-right: var(--space-sm);
+            color: var(--accent-blue);
+        }
+        
+        .algorithm-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .algorithm-list li {
+            position: relative;
+            padding-left: var(--space-xl);
+            margin-bottom: var(--space-md);
+        }
+        
+        .algorithm-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-blue);
+        }
+        
+        .code-block {
+            background-color: var(--dark-color);
+            color: white;
+            font-family: var(--font-mono);
+            padding: var(--space-lg);
+            border-radius: 8px;
+            margin: var(--space-lg) 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+        
+        .highlight {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: var(--space-md) var(--space-lg);
+            margin: var(--space-lg) 0;
+            border-radius: 4px;
+        }
+        
+        .highlight h4 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+        }
+        
+        .highlight p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: var(--space-xxl) 0;
+            margin-top: var(--space-xxl);
+        }
+        
+        .footer p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer .version {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.25rem;
+            }
+            
+            .algorithm-card {
+                padding: var(--space-lg);
+            }
+            
+            .code-block {
+                padding: var(--space-md);
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            h2 {
+                font-size: 1.35rem;
+            }
+            
+            h3 {
+                font-size: 1.15rem;
+            }
+            
+            .algorithm-card {
+                padding: var(--space-md);
+            }
+            
+            .highlight {
+                padding: var(--space-sm) var(--space-md);
+            }
+        }
     </style>
-  </head>
-  <body class="bg-gray-100">
-    <div class="max-w-4xl mx-auto p-4">
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <div class="flex items-center mb-4">
-          <img alt="Beta AI Editor logo" class="w-12 h-12 rounded-full mr-4" height="50" src="https://raw.githubusercontent.com/bniladridas/beta-ai-editor/master/favicons/ms-icon-310x310.png" width="50"/>
-          <div>
-            <h1 class="text-xl font-bold">Beta AI Editor</h1>
-            <p class="text-gray-500">GitHub App</p>
-          </div>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-code"></i> Algorithm Transparency</h1>
+            <p>Understanding how the AI code generation works in Beta AI Editor</p>
         </div>
-        <p class="text-gray-700 mb-4">
-          A software solution that simplifies coding by providing intelligent assistance, automation, and detailed explanations.
-        </p>
-        <h2 class="text-lg font-semibold mb-2">Example Code for Webhook Handling (Node.js)</h2>
-        <p class="text-gray-700 mb-4">
-          If you're using Node.js, here's a basic example for handling webhooks:
-        </p>
-        <pre class="bg-gray-100 p-4 rounded-lg overflow-auto text-sm text-gray-800">
-          <code>
-            const express = require('express');
-            const crypto = require('crypto');
-            const app = express();
-
-            const WEBHOOK_SECRET = process.env.GITHUB_WEBHOOK_SECRET;
-
-            app.post('/api/github/webhook', (req, res) => {
-              const signature = req.headers['x-hub-signature-256'];
-              const payload = JSON.stringify(req.body);
-              const digest = 'sha256=' + crypto.createHmac('sha256', WEBHOOK_SECRET).update(payload).digest('hex');
-
-              if (signature !== digest) {
-                return res.status(401).send('Unauthorized');
-              }
-
-              // Handle the event
-              const event = req.headers['x-github-event'];
-              switch (event) {
-                case 'ping':
-                  console.log('GitHub Webhook Ping Received');
-                  break;
-                case 'push':
-                  console.log('Push Event Received:', req.body);
-                  break;
-                default:
-                  console.log('Unhandled Event:', event);
-              }
-
-              res.status(200).send('OK');
-            });
-
-            const PORT = process.env.PORT || 3000;
-            app.listen(PORT, () => {
-              console.log(`Server running on port ${PORT}`);
-            });
-          </code>
-        </pre>
-        <h3 class="text-lg font-semibold mt-6 mb-2">Note to Users:</h3>
-        <p class="text-gray-700">
-          Beta AI Editor requires access to your repositories to enable features like pull request analysis and code suggestions. We provide these features while ensuring your data remains secure and private. For more details, view our
-          <a class="text-blue-500" href="https://github.com/bniladridas/beta-ai-editor/blob/master/docs/data_privacy_policy.md">data privacy policy</a>. Please also refer to our
-          <a class="text-blue-500" href="https://github.com/bniladridas/beta-ai-editor/blob/master/docs/user_guide.md">User Guide</a> | <a class="text-blue-500" href="https://github.com/bniladridas/beta-ai-editor/blob/master/docs/terms_of_service.md">Terms of Service</a>.
-        </p>
-      </div>
-      <div class="mt-6">
-        <p>Repository: <a class="text-blue-500" href="https://github.com/bniladridas/beta-ai-editor">https://github.com/bniladridas/beta-ai-editor</a></p>
-        <p>Visit my <a class="text-blue-500" href="https://github.com/bniladridas">GitHub</a> | Check out the <a class="text-blue-500" href="https://github.com/apps/beta-ai-editor">GitHub App</a> | Explore the <a class="text-blue-500" href="https://betaai-editor.vercel.app/">Live Web App</a></p>
-      </div>
-    </div>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    </header>
+    
+    <main class="container">
+        <section class="section">
+            <h2>Overview</h2>
+            <p>This document provides transparency regarding the algorithms and AI models used in the Beta AI Editor. We believe in open and transparent AI development, particularly when it comes to code generation tools that developers rely on for their work.</p>
+            
+            <div class="highlight">
+                <h4><i class="fas fa-info-circle"></i> Why Transparency Matters</h4>
+                <p>Understanding how AI algorithms work helps users make informed decisions about when and how to use AI-generated code. It builds trust and promotes responsible use of AI technology in development workflows.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>Gemini AI Integration</h2>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-microchip"></i> Model Information</h3>
+                <ul class="algorithm-list">
+                    <li><strong>Model Used</strong>: <code>gemini-1.5-pro</code></li>
+                    <li><strong>Provider</strong>: Google AI (via Generative AI API)</li>
+                    <li><strong>Model Type</strong>: Large Language Model (LLM)</li>
+                    <li><strong>Model Version</strong>: As of April 2025</li>
+                </ul>
+            </div>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-cogs"></i> How the Algorithm Works</h3>
+                
+                <h4>1. Input Processing</h4>
+                <p>When you enter a prompt and select a programming language, the application creates a structured prompt for the AI model:</p>
+                <div class="code-block">
+                    Generate ${selectedLanguage} code for: ${prompt}. Only provide the code, no explanations.
+                </div>
+                
+                <h4>2. API Request</h4>
+                <p>The application sends this prompt to Google's Generative AI API, specifying the <code>gemini-1.5-pro</code> model and authenticating with your API key.</p>
+                
+                <h4>3. Response Processing</h4>
+                <p>The raw text response from the API is captured and displayed directly in the editor without any post-processing or filtering.</p>
+                
+                <h4>4. Error Handling</h4>
+                <p>If any errors occur during this process, the application captures them and displays specific error messages based on the type of error (API key issues, network problems, etc.).</p>
+            </div>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-exclamation-triangle"></i> Algorithm Limitations</h3>
+                
+                <h4>1. Content Limitations</h4>
+                <ul class="algorithm-list">
+                    <li>The code generation is limited by the training data of the Gemini model</li>
+                    <li>The model may not be familiar with very recent programming languages or frameworks</li>
+                    <li>Generated code is not guaranteed to be secure, efficient, or bug-free</li>
+                </ul>
+                
+                <h4>2. Bias Considerations</h4>
+                <ul class="algorithm-list">
+                    <li>The model may reflect biases present in its training data</li>
+                    <li>It may generate code that follows common patterns rather than optimal solutions</li>
+                    <li>The model may favor certain programming paradigms over others</li>
+                </ul>
+                
+                <h4>3. Security Implications</h4>
+                <ul class="algorithm-list">
+                    <li>Generated code should always be reviewed for security vulnerabilities</li>
+                    <li>The model does not perform security analysis on the generated code</li>
+                    <li>Users should not implement generated code in production without thorough review</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>User Control and Agency</h2>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-user-edit"></i> Editing Capability</h3>
+                <p>Users have full control to edit, modify, or discard generated code. The editor provides syntax highlighting to help users understand the generated code, and users can save, download, or clear the generated code at any time.</p>
+            </div>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-sync-alt"></i> Prompt Refinement</h3>
+                <p>Users can iteratively refine their prompts to get better results. There is no limit on the number of generation attempts, and users can specify details in their prompts to guide the generation process.</p>
+            </div>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-shield-alt"></i> No Automatic Execution</h3>
+                <p>Generated code is never automatically executed. Users must explicitly choose to use the generated code, and the application does not have access to the user's broader development environment.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>Data Usage and Privacy</h2>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-server"></i> API Requests</h3>
+                <p>User prompts are sent to Google's servers via the Generative AI API. Google's data usage policies apply to these requests. No user data is stored by the Beta AI Editor application itself.</p>
+            </div>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-database"></i> Local Storage</h3>
+                <p>Generated code can be saved locally by the user. No user data is transmitted to any servers other than the Gemini API. API keys are stored in environment variables and not transmitted elsewhere.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>Continuous Improvement</h2>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-arrow-up"></i> Model Updates</h3>
+                <p>We regularly update to the latest stable versions of the Gemini API. Changes to the underlying model are documented in our release notes, and major algorithm changes will be reflected in updates to this document.</p>
+            </div>
+            
+            <div class="algorithm-card">
+                <h3><i class="fas fa-comments"></i> Feedback Incorporation</h3>
+                <p>User feedback about algorithm performance is regularly reviewed. Patterns of generation issues are addressed through prompt engineering, and significant limitations are documented and communicated to users.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>Conclusion</h2>
+            <p>The Beta AI Editor strives to provide a useful code generation tool while maintaining transparency about how the underlying AI algorithms work. We encourage users to approach AI-generated code with appropriate caution and to leverage their own expertise when evaluating the output.</p>
+            
+            <p>For questions or concerns about our algorithm transparency, please open an issue on our <a href="https://github.com/bniladridas/beta-ai-editor" target="_blank">GitHub repository</a>.</p>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Beta AI Editor. All rights reserved.</p>
+            <p class="version">Document Version: 1.0 | Last Updated: April 21, 2025</p>
+        </div>
+    </footer>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
