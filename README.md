@@ -94,5 +94,8 @@ If you encounter the error "Failed to generate code", please check:
 3. The Gemini API service is available
 4. You're using a supported model (the app now uses 'gemini-1.5-pro')
 
+### Algorithm Transparency
+We believe in transparent AI development. To understand how our AI code generation works, including model information, limitations, and data usage, please see our [Algorithm Transparency Documentation](algorithm-transparency.html).
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
